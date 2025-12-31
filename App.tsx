@@ -30,7 +30,7 @@ const TMLogo = () => (
 );
 
 const App: React.FC = () => {
-  const STORAGE_KEY = 'sttm-agenda-v36-final';
+  const STORAGE_KEY = 'sttm-agenda-v37-final';
   const introRef = useRef<HTMLTextAreaElement>(null);
   const paperRef = useRef<HTMLDivElement>(null);
 
@@ -187,7 +187,7 @@ const App: React.FC = () => {
         className="bg-white w-[210mm] h-[297mm] p-8 md:p-10 shadow-2xl print-container relative flex flex-col border-t-[14px] border-[#772432] box-border overflow-hidden"
       >
         
-        {/* TOP HEADER - CORRECTED LABEL & SLIGHTLY LARGER LOGO */}
+        {/* TOP HEADER */}
         <div className="flex justify-between items-start mb-3 gap-6 shrink-0 border-b-2 border-gray-100 pb-3">
           <div className="w-40 shrink-0">
              <TMLogo />
@@ -288,7 +288,7 @@ const App: React.FC = () => {
             </div>
 
             {/* CLUB MISSION - ENLARGED AND BETTER SPACED */}
-            <div className="mt-3 pt-4 pb-3 text-center border-t-2 border-[#F2DF74]/30 shrink-0">
+            <div className="mt-1 pt-3 pb-2 text-center border-t-2 border-[#F2DF74]/30 shrink-0">
                <h3 className="text-[#004165] font-black italic text-[13px] uppercase mb-1 tracking-[0.2em]">Club Mission</h3>
                <p className="text-[#004165] font-black text-[11.5px] leading-relaxed italic opacity-95 px-6">
                  "We provide a supportive and positive learning experience in which members are empowered to develop communication and leadership skills, resulting in greater self-confidence and personal growth."
@@ -297,79 +297,79 @@ const App: React.FC = () => {
           </div>
 
           {/* RIGHT SIDEBAR (37%) - REFINED VERTICAL FLOW */}
-          <div className="w-[37%] flex flex-col gap-3 overflow-hidden">
+          <div className="w-[37%] flex flex-col gap-2.5 overflow-hidden">
             
-            {/* 1. Time & Venue - Compact */}
-            <div className="bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 shadow-inner shrink-0">
-              <div className="flex items-center gap-1.5 text-[#004165] font-black border-b border-[#004165]/10 pb-1 mb-2">
+            {/* 1. Time & Venue */}
+            <div className="bg-gray-50/50 p-2 rounded-xl border border-gray-100 shadow-inner shrink-0">
+              <div className="flex items-center gap-1.5 text-[#004165] font-black border-b border-[#004165]/10 pb-0.5 mb-1.5">
                 <Clock size={12}/> <span className="text-[9px] tracking-widest uppercase">Time & Venue</span>
               </div>
-              <div className="text-[9px] font-black text-gray-700 space-y-1.5">
+              <div className="text-[9px] font-black text-gray-700 space-y-1">
                 <div className="flex gap-1 bg-white p-0.5 rounded-md border border-gray-100 shadow-sm">
                   <select value={info.day} onChange={e => setInfo({...info, day: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[12px] font-black">{DAYS.map(d => <option key={d} value={d}>{d}</option>)}</select>
                   <select value={info.month} onChange={e => setInfo({...info, month: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[12px] font-black">{MONTHS.map(m => <option key={m} value={m}>{m}</option>)}</select>
                   <select value={info.date} onChange={e => setInfo({...info, date: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[12px] font-black">{DATES.map(d => <option key={d} value={d}>{d}</option>)}</select>
                 </div>
-                <div className="flex items-center justify-center bg-[#772432] text-white py-1 rounded-md shadow-sm">
+                <div className="flex items-center justify-center bg-[#772432] text-white py-0.5 rounded-md shadow-sm">
                   <input className="bg-transparent outline-none w-20 font-black text-center text-2xl leading-none" value={info.time} onChange={e => setInfo({...info, time: e.target.value})} />
                 </div>
               </div>
-              <div className="text-[12px] leading-tight font-bold text-gray-800 space-y-1 mt-2">
+              <div className="text-[12px] leading-tight font-bold text-gray-800 space-y-0.5 mt-1.5">
                 <textarea className="w-full bg-transparent outline-none resize-none overflow-hidden p-0 border-none focus:ring-0 font-black leading-tight" rows={1} value={info.location} onInput={e => handleAutoHeight(e.target as HTMLTextAreaElement)} onChange={e => setInfo({...info, location: e.target.value})} />
                 <textarea className="w-full bg-transparent outline-none resize-none overflow-hidden p-0 border-none focus:ring-0 text-[#004165] text-[10px] uppercase font-black italic opacity-60 leading-tight" rows={1} value={info.locationEn} onInput={e => handleAutoHeight(e.target as HTMLTextAreaElement)} onChange={e => setInfo({...info, locationEn: e.target.value})} />
               </div>
             </div>
 
             {/* 2. Word of the Day */}
-            <div className="bg-[#004165] text-white px-2.5 py-2 rounded-xl border-b-4 border-[#F2DF74] shadow-md shrink-0">
+            <div className="bg-[#004165] text-white px-2.5 py-1.5 rounded-xl border-b-4 border-[#F2DF74] shadow-md shrink-0">
                <span className="text-[8px] font-black text-white/70 uppercase block mb-0.5 tracking-widest leading-none">Word of the Day</span>
                <input className="w-full bg-transparent outline-none text-xl font-black text-[#F2DF74] italic uppercase tracking-[0.05em] text-center leading-none" value={info.wordOfTheDay} onChange={e => setInfo({...info, wordOfTheDay: e.target.value})} />
             </div>
 
-            {/* 3. Time Rule - Optimized Table with Larger Font */}
+            {/* 3. Time Rule */}
             <div className="border border-blue-100 rounded-xl overflow-hidden shadow-sm shrink-0 bg-white">
-              <div className="bg-[#e1f5fe] px-3 py-1.5 border-b border-blue-100">
+              <div className="bg-[#e1f5fe] px-3 py-1 border-b border-blue-100">
                 <h3 className="font-bold italic text-base text-[#004165] leading-none">Time Rule</h3>
               </div>
               <table className="w-full text-left text-[11px] font-bold border-collapse">
                 <thead>
                   <tr className="border-b border-gray-50 bg-gray-50/30">
-                    <th className="px-2 py-1 text-[#004165]">Type</th>
-                    <th className="px-1 py-1 text-[#004165]">Short</th>
-                    <th className="px-1 py-1 text-[#004165]">Long</th>
+                    <th className="px-2 py-0.5 text-[#004165]">Type</th>
+                    <th className="px-1 py-0.5 text-[#004165]">Short</th>
+                    <th className="px-1 py-0.5 text-[#004165]">Long</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-50">
-                    <td className="bg-[#ccff00] px-2 py-1.5 leading-none text-black">Green</td>
-                    <td className="px-1 py-1.5 leading-none">1m left</td>
-                    <td className="px-1 py-1.5 leading-none">2m left</td>
+                    <td className="bg-[#ccff00] px-2 py-1 leading-none text-black">Green</td>
+                    <td className="px-1 py-1 leading-none">1m left</td>
+                    <td className="px-1 py-1 leading-none">2m left</td>
                   </tr>
                   <tr className="border-b border-gray-50">
-                    <td className="bg-yellow-400 px-2 py-1.5 leading-none text-black">Yellow</td>
-                    <td className="px-1 py-1.5 leading-none">0.5m left</td>
-                    <td className="px-1 py-1.5 leading-none">1m left</td>
+                    <td className="bg-yellow-400 px-2 py-1 leading-none text-black">Yellow</td>
+                    <td className="px-1 py-1 leading-none">0.5m left</td>
+                    <td className="px-1 py-1 leading-none">1m left</td>
                   </tr>
                   <tr className="border-b border-gray-50">
-                    <td className="bg-red-600 text-white px-2 py-1.5 leading-none">Red</td>
-                    <td className="px-1 py-1.5 leading-none">Up</td>
-                    <td className="px-1 py-1.5 leading-none">Up</td>
+                    <td className="bg-red-600 text-white px-2 py-1 leading-none">Red</td>
+                    <td className="px-1 py-1 leading-none">Up</td>
+                    <td className="px-1 py-1 leading-none">Up</td>
                   </tr>
                   <tr>
-                    <td className="bg-gray-50 px-2 py-1.5 text-gray-600 leading-none">Grace</td>
-                    <td className="px-1 py-1.5 leading-none">30s</td>
-                    <td className="px-1 py-1.5 leading-none">30s</td>
+                    <td className="bg-gray-50 px-2 py-1 text-gray-600 leading-none">Grace</td>
+                    <td className="px-1 py-1 leading-none">30s</td>
+                    <td className="px-1 py-1 leading-none">30s</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            {/* 4. Reminder - Header with Background */}
+            {/* 4. Reminder */}
             <div className="border border-red-50 rounded-xl overflow-hidden shadow-sm shrink-0 flex flex-col bg-white">
-              <div className="bg-[#fce4ec] px-3 py-1.5 border-b border-red-100">
+              <div className="bg-[#fce4ec] px-3 py-1 border-b border-red-100">
                 <h3 className="font-bold italic text-base text-[#772432] leading-none">Reminder</h3>
               </div>
-              <div className="p-3 py-2 space-y-1.5 text-[10.5px] font-bold text-gray-800 leading-snug">
+              <div className="p-2 py-1 space-y-1 text-[10.5px] font-bold text-gray-800 leading-snug">
                 {reminders.map((r, idx) => (
                   <div key={idx} className="flex gap-2 items-start">
                     <span className="shrink-0 text-[#772432] font-black">{idx + 1}.</span>
@@ -379,10 +379,10 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* 5. Club Officers - Positioned to fill remaining space */}
-            <div className="mt-auto pt-2 shrink-0 overflow-hidden">
-               <h3 className="text-[#004165] font-black italic text-[13px] uppercase mb-1.5 tracking-[0.1em] border-b-2 border-[#004165]/10 pb-0.5">Club Officers</h3>
-               <div className="space-y-1">
+            {/* 5. Club Officers */}
+            <div className="mt-auto pt-1 shrink-0 overflow-hidden">
+               <h3 className="text-[#004165] font-black italic text-[13px] uppercase mb-1 tracking-[0.1em] border-b-2 border-[#004165]/10 pb-0.5">Club Officers</h3>
+               <div className="space-y-0.5">
                   {officers.map((off, idx) => (
                     <div key={idx} className="flex justify-between items-center text-[10px] font-black border-b border-gray-50/50 pb-0.5 last:border-0">
                       <span className="text-gray-400 uppercase w-[50%] tracking-tighter whitespace-nowrap overflow-hidden text-ellipsis">{off.role}</span>
@@ -396,13 +396,10 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* BOTTOM BRANDING - PROFESSIONAL FOOTER */}
-        <div className="mt-4 pt-3 border-t-2 border-[#F2DF74] flex flex-col items-center w-full shrink-0">
+        {/* BOTTOM BRANDING - MOVED LOWER & REDUCED CONTENT */}
+        <div className="mt-auto pt-3 border-t-2 border-[#F2DF74] flex flex-col items-center w-full shrink-0">
           <p className="text-[#004165] font-black text-[11px] tracking-[0.35em] uppercase leading-none mb-1 opacity-90">CONNECT • LEARN • GROW</p>
-          <p className="text-[#772432] font-black text-[14px] tracking-[0.15em] uppercase leading-none mt-0.5">粤东地区首家头马国际演讲俱乐部</p>
-          <div className="text-[7.5px] font-bold text-gray-300 uppercase tracking-[0.3em] mt-3 opacity-30 italic leading-none">
-            Official STTM Agenda • A Professional Management Tool
-          </div>
+          <p className="text-[#772432] font-black text-[14px] tracking-[0.15em] uppercase leading-none mt-0.5 mb-2">粤东地区首家头马国际演讲俱乐部</p>
         </div>
       </div>
     </div>
