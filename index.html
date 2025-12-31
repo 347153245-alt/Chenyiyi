@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShanTou Toastmasters Agenda Maker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+      :root {
+        --tm-maroon: #772432;
+        --tm-blue: #004165;
+        --tm-yellow: #f2df74;
+        --tm-grey: #a9b2b1;
+      }
+      
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: white !important;
+        }
+        .print-container {
+          box-shadow: none !important;
+          margin: 0 !important;
+          padding: 5mm !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          min-height: auto !important;
+          border-top: 10px solid var(--tm-maroon) !important;
+        }
+        * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        .print-bg-maroon {
+          background-color: var(--tm-maroon) !important;
+          color: white !important;
+        }
+        .print-bg-blue {
+          background-color: var(--tm-blue) !important;
+          color: white !important;
+        }
+        .group {
+          page-break-inside: avoid !important;
+        }
+      }
+      
+      @page {
+        margin: 0;
+        size: A4;
+      }
+
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+      }
+    }
+    </script>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <div id="root"></div>
+  </body>
+</html>
