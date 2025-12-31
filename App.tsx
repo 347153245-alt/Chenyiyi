@@ -30,7 +30,7 @@ const TMLogo = () => (
 );
 
 const App: React.FC = () => {
-  const STORAGE_KEY = 'sttm-agenda-v20-ux-plus';
+  const STORAGE_KEY = 'sttm-agenda-v21-final-layout';
   const introRef = useRef<HTMLTextAreaElement>(null);
   const paperRef = useRef<HTMLDivElement>(null);
 
@@ -224,21 +224,22 @@ const App: React.FC = () => {
 
         {/* Meeting Information Section */}
         <div className="space-y-4 md:space-y-6 mb-6">
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b-2 border-[#772432] pb-2 md:pb-4">
+          {/* Meeting # & Theme - Forced single line on desktop */}
+          <div className="flex flex-wrap md:flex-nowrap items-center gap-x-5 gap-y-2 border-b-2 border-[#772432] pb-2 md:pb-4">
             <div className="flex items-center gap-1.5 shrink-0">
-              <span className="text-lg md:text-3xl font-black text-[#004165] italic">Meeting #</span>
+              <span className="text-lg md:text-3xl font-black text-[#004165] italic whitespace-nowrap">Meeting #</span>
               <input
                 type="text"
-                className="text-xl md:text-4xl font-black text-[#772432] outline-none w-14 md:w-32 bg-transparent"
+                className="text-xl md:text-4xl font-black text-[#772432] outline-none w-14 md:w-28 bg-transparent"
                 value={info.meetingNumber}
                 onChange={(e) => setInfo({ ...info, meetingNumber: e.target.value })}
               />
             </div>
-            <div className="flex items-center gap-2 flex-grow min-w-[240px]">
+            <div className="flex items-center gap-2 flex-grow min-w-[180px]">
               <span className="text-lg md:text-3xl font-black text-[#004165] shrink-0">主题:</span>
               <input
                 type="text"
-                className="text-lg md:text-3xl font-black text-[#772432] outline-none flex-grow bg-transparent"
+                className="text-lg md:text-3xl font-black text-[#772432] outline-none flex-grow bg-transparent overflow-ellipsis"
                 value={info.theme}
                 onChange={(e) => setInfo({ ...info, theme: e.target.value })}
                 placeholder="会议主题..."
@@ -345,7 +346,6 @@ const App: React.FC = () => {
           <div className="space-y-0.5 relative">
             {computedAgenda.map((item, index) => (
               <React.Fragment key={item.id}>
-                {/* IN-BETWEEN ADD BUTTONS (Visible on Hover) */}
                 <div className="h-2 relative group/plus no-print">
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/plus:opacity-100 transition-all z-50">
                     <div className="flex gap-2">
@@ -360,7 +360,6 @@ const App: React.FC = () => {
                 </div>
 
                 <div className={`group relative transition-all duration-200 ${item.isSectionHeader ? 'pt-4 pb-1.5' : ''}`}>
-                  {/* Inline Action Buttons (Updated for easier access) */}
                   <div className="absolute -left-1 md:-left-12 top-1/2 -translate-y-1/2 no-print flex flex-col gap-1 opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 transition-opacity bg-white/80 backdrop-blur shadow-xl rounded-lg p-1 border border-gray-100 z-40">
                     <button onClick={() => moveItem(index, 'up')} className="p-2 hover:bg-gray-100 rounded text-gray-400 hover:text-[#772432] transition-colors"><ChevronUp size={16}/></button>
                     <button onClick={() => moveItem(index, 'down')} className="p-2 hover:bg-gray-100 rounded text-gray-400 hover:text-[#772432] transition-colors"><ChevronDown size={16}/></button>
@@ -398,7 +397,6 @@ const App: React.FC = () => {
                         />
                       </div>
                       <div className="w-20 md:w-56 px-3 text-right">
-                        {/* Role Textarea - Optimized with padding-right for italics */}
                         <textarea
                           rows={1}
                           className="w-full bg-transparent outline-none text-[11px] md:text-base font-black text-[#772432] text-right italic resize-none overflow-hidden block pr-2 md:pr-4"
@@ -422,7 +420,6 @@ const App: React.FC = () => {
             ))}
           </div>
 
-          {/* Bottom Creation Controls (Still kept for convenience) */}
           <div className="no-print mt-8 flex gap-3 md:gap-5">
             <button onClick={() => addAgendaItemAt(agenda.length)} className="flex-grow py-3 border-2 border-dashed border-[#004165]/20 text-[#004165] rounded-xl font-bold hover:bg-[#004165] hover:text-white transition-all text-[10px] md:text-sm uppercase tracking-widest">+ 项目 Item</button>
             <button onClick={() => addAgendaItemAt(agenda.length, true)} className="flex-grow py-3 border-2 border-dashed border-[#772432]/20 text-[#772432] rounded-xl font-bold hover:bg-[#772432] hover:text-white transition-all text-[10px] md:text-sm uppercase tracking-widest">+ 环节 Section</button>
@@ -481,7 +478,6 @@ const App: React.FC = () => {
         </div>
       </div>
       
-      {/* Page Footer Note */}
       <div className="mt-6 md:mt-8 text-gray-400 font-black uppercase text-[10px] md:text-sm tracking-[0.4em] no-print pb-24 md:pb-16 px-6 text-center">
         ShanTou Toastmasters Club • Weekly Agenda Maker
       </div>
