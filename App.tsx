@@ -187,9 +187,9 @@ const App: React.FC = () => {
         className="bg-white w-[210mm] h-[297mm] p-8 md:p-10 shadow-2xl print-container relative flex flex-col border-t-[14px] border-[#772432] box-border overflow-hidden"
       >
         
-        {/* TOP HEADER - CORRECTED LABEL */}
+        {/* TOP HEADER - CORRECTED LABEL & SLIGHTLY LARGER LOGO */}
         <div className="flex justify-between items-start mb-3 gap-6 shrink-0 border-b-2 border-gray-100 pb-3">
-          <div className="w-32 shrink-0">
+          <div className="w-40 shrink-0">
              <TMLogo />
           </div>
           <div className="flex-grow flex flex-col items-end">
@@ -311,12 +311,12 @@ const App: React.FC = () => {
                   <select value={info.date} onChange={e => setInfo({...info, date: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[10px] font-black">{DATES.map(d => <option key={d} value={d}>{d}</option>)}</select>
                 </div>
                 <div className="flex items-center justify-center bg-[#772432] text-white py-1 rounded-md shadow-sm">
-                  <input className="bg-transparent outline-none w-16 font-black text-center text-lg leading-none" value={info.time} onChange={e => setInfo({...info, time: e.target.value})} />
+                  <input className="bg-transparent outline-none w-20 font-black text-center text-2xl leading-none" value={info.time} onChange={e => setInfo({...info, time: e.target.value})} />
                 </div>
               </div>
-              <div className="text-[10px] leading-tight font-bold text-gray-800 space-y-1 mt-2">
+              <div className="text-[12px] leading-tight font-bold text-gray-800 space-y-1 mt-2">
                 <textarea className="w-full bg-transparent outline-none resize-none overflow-hidden p-0 border-none focus:ring-0 font-black leading-tight" rows={1} value={info.location} onInput={e => handleAutoHeight(e.target as HTMLTextAreaElement)} onChange={e => setInfo({...info, location: e.target.value})} />
-                <textarea className="w-full bg-transparent outline-none resize-none overflow-hidden p-0 border-none focus:ring-0 text-[#004165] text-[8.5px] uppercase font-black italic opacity-60 leading-tight" rows={1} value={info.locationEn} onInput={e => handleAutoHeight(e.target as HTMLTextAreaElement)} onChange={e => setInfo({...info, locationEn: e.target.value})} />
+                <textarea className="w-full bg-transparent outline-none resize-none overflow-hidden p-0 border-none focus:ring-0 text-[#004165] text-[10px] uppercase font-black italic opacity-60 leading-tight" rows={1} value={info.locationEn} onInput={e => handleAutoHeight(e.target as HTMLTextAreaElement)} onChange={e => setInfo({...info, locationEn: e.target.value})} />
               </div>
             </div>
 
