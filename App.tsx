@@ -30,7 +30,7 @@ const TMLogo = () => (
 );
 
 const App: React.FC = () => {
-  const STORAGE_KEY = 'sttm-agenda-v37-final';
+  const STORAGE_KEY = 'sttm-agenda-v38-print-optimized';
   const introRef = useRef<HTMLTextAreaElement>(null);
   const paperRef = useRef<HTMLDivElement>(null);
 
@@ -184,11 +184,11 @@ const App: React.FC = () => {
       {/* Main A4 Paper Area */}
       <div 
         ref={paperRef}
-        className="bg-white w-[210mm] h-[297mm] p-8 md:p-10 shadow-2xl print-container relative flex flex-col border-t-[14px] border-[#772432] box-border overflow-hidden"
+        className="bg-white w-[210mm] h-[297mm] p-8 md:p-10 pb-8 shadow-2xl print-container relative flex flex-col border-t-[14px] border-[#772432] box-border overflow-hidden"
       >
         
         {/* TOP HEADER */}
-        <div className="flex justify-between items-start mb-3 gap-6 shrink-0 border-b-2 border-gray-100 pb-3">
+        <div className="flex justify-between items-start mb-2.5 gap-6 shrink-0 border-b-2 border-gray-100 pb-2.5">
           <div className="w-40 shrink-0">
              <TMLogo />
           </div>
@@ -207,12 +207,12 @@ const App: React.FC = () => {
         </div>
 
         {/* Theme and Introduction */}
-        <div className="flex flex-col gap-1.5 mb-2.5 shrink-0">
+        <div className="flex flex-col gap-1 mb-1.5 shrink-0">
           <div className="flex items-baseline gap-3">
             <span className="text-lg font-black text-[#004165] shrink-0 uppercase italic tracking-wider leading-none">Theme:</span>
             <input className="text-2xl font-black text-[#772432] bg-transparent outline-none flex-grow border-b border-dashed border-gray-200 focus:border-[#772432] px-2 italic leading-none pb-0.5" value={info.theme} onChange={e => setInfo({...info, theme: e.target.value})} placeholder="Theme..." />
           </div>
-          <div className="bg-[#772432]/5 px-3 py-1.5 rounded-lg border-l-4 border-[#772432] flex items-start gap-2">
+          <div className="bg-[#772432]/5 px-3 py-1 rounded-lg border-l-4 border-[#772432] flex items-start gap-2">
              <Info className="text-[#772432] shrink-0 mt-0.5" size={14} />
              <textarea 
               ref={introRef} 
@@ -278,7 +278,7 @@ const App: React.FC = () => {
                           <textarea rows={1} className="w-full bg-transparent outline-none text-[11px] font-black text-[#772432] text-right italic resize-none overflow-hidden block pb-0.5 leading-tight" value={item.role} onInput={e => handleAutoHeight(e.target as HTMLTextAreaElement)} onChange={e => updateAgendaItem(item.id, 'role', e.target.value)} placeholder="..." />
                         </div>
                         <div className="w-8 text-right font-black text-gray-400 text-[9px] mt-0.5 shrink-0">
-                          <input className="w-full bg-transparent outline-none text-right" value={info.duration} onChange={e => updateAgendaItem(item.id, 'duration', e.target.value)} />
+                          <input className="w-full bg-transparent outline-none text-right" value={item.duration} onChange={e => updateAgendaItem(item.id, 'duration', e.target.value)} />
                         </div>
                       </div>
                     )}
@@ -287,24 +287,24 @@ const App: React.FC = () => {
               ))}
             </div>
 
-            {/* CLUB MISSION - ENLARGED AND BETTER SPACED */}
-            <div className="mt-1 pt-3 pb-2 text-center border-t-2 border-[#F2DF74]/30 shrink-0">
-               <h3 className="text-[#004165] font-black italic text-[13px] uppercase mb-1 tracking-[0.2em]">Club Mission</h3>
-               <p className="text-[#004165] font-black text-[11.5px] leading-relaxed italic opacity-95 px-6">
+            {/* CLUB MISSION - MOVED UP */}
+            <div className="mt-1.5 pt-2 pb-1.5 text-center border-t-2 border-[#F2DF74]/30 shrink-0">
+               <h3 className="text-[#004165] font-black italic text-[12px] uppercase mb-0.5 tracking-[0.2em]">Club Mission</h3>
+               <p className="text-[#004165] font-black text-[10.5px] leading-relaxed italic opacity-95 px-4">
                  "We provide a supportive and positive learning experience in which members are empowered to develop communication and leadership skills, resulting in greater self-confidence and personal growth."
                </p>
             </div>
           </div>
 
           {/* RIGHT SIDEBAR (37%) - REFINED VERTICAL FLOW */}
-          <div className="w-[37%] flex flex-col gap-2.5 overflow-hidden">
+          <div className="w-[37%] flex flex-col gap-2 overflow-hidden">
             
             {/* 1. Time & Venue */}
             <div className="bg-gray-50/50 p-2 rounded-xl border border-gray-100 shadow-inner shrink-0">
-              <div className="flex items-center gap-1.5 text-[#004165] font-black border-b border-[#004165]/10 pb-0.5 mb-1.5">
+              <div className="flex items-center gap-1.5 text-[#004165] font-black border-b border-[#004165]/10 pb-0.5 mb-1">
                 <Clock size={12}/> <span className="text-[9px] tracking-widest uppercase">Time & Venue</span>
               </div>
-              <div className="text-[9px] font-black text-gray-700 space-y-1">
+              <div className="text-[9px] font-black text-gray-700 space-y-0.5">
                 <div className="flex gap-1 bg-white p-0.5 rounded-md border border-gray-100 shadow-sm">
                   <select value={info.day} onChange={e => setInfo({...info, day: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[12px] font-black">{DAYS.map(d => <option key={d} value={d}>{d}</option>)}</select>
                   <select value={info.month} onChange={e => setInfo({...info, month: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[12px] font-black">{MONTHS.map(m => <option key={m} value={m}>{m}</option>)}</select>
@@ -314,14 +314,14 @@ const App: React.FC = () => {
                   <input className="bg-transparent outline-none w-20 font-black text-center text-2xl leading-none" value={info.time} onChange={e => setInfo({...info, time: e.target.value})} />
                 </div>
               </div>
-              <div className="text-[12px] leading-tight font-bold text-gray-800 space-y-0.5 mt-1.5">
+              <div className="text-[12px] leading-tight font-bold text-gray-800 space-y-0.5 mt-1">
                 <textarea className="w-full bg-transparent outline-none resize-none overflow-hidden p-0 border-none focus:ring-0 font-black leading-tight" rows={1} value={info.location} onInput={e => handleAutoHeight(e.target as HTMLTextAreaElement)} onChange={e => setInfo({...info, location: e.target.value})} />
                 <textarea className="w-full bg-transparent outline-none resize-none overflow-hidden p-0 border-none focus:ring-0 text-[#004165] text-[10px] uppercase font-black italic opacity-60 leading-tight" rows={1} value={info.locationEn} onInput={e => handleAutoHeight(e.target as HTMLTextAreaElement)} onChange={e => setInfo({...info, locationEn: e.target.value})} />
               </div>
             </div>
 
             {/* 2. Word of the Day */}
-            <div className="bg-[#004165] text-white px-2.5 py-1.5 rounded-xl border-b-4 border-[#F2DF74] shadow-md shrink-0">
+            <div className="bg-[#004165] text-white px-2.5 py-1 rounded-xl border-b-4 border-[#F2DF74] shadow-md shrink-0">
                <span className="text-[8px] font-black text-white/70 uppercase block mb-0.5 tracking-widest leading-none">Word of the Day</span>
                <input className="w-full bg-transparent outline-none text-xl font-black text-[#F2DF74] italic uppercase tracking-[0.05em] text-center leading-none" value={info.wordOfTheDay} onChange={e => setInfo({...info, wordOfTheDay: e.target.value})} />
             </div>
@@ -341,24 +341,24 @@ const App: React.FC = () => {
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-50">
-                    <td className="bg-[#ccff00] px-2 py-1 leading-none text-black">Green</td>
-                    <td className="px-1 py-1 leading-none">1m left</td>
-                    <td className="px-1 py-1 leading-none">2m left</td>
+                    <td className="bg-[#ccff00] px-2 py-0.5 leading-none text-black">Green</td>
+                    <td className="px-1 py-0.5 leading-none">1m left</td>
+                    <td className="px-1 py-0.5 leading-none">2m left</td>
                   </tr>
                   <tr className="border-b border-gray-50">
-                    <td className="bg-yellow-400 px-2 py-1 leading-none text-black">Yellow</td>
-                    <td className="px-1 py-1 leading-none">0.5m left</td>
-                    <td className="px-1 py-1 leading-none">1m left</td>
+                    <td className="bg-yellow-400 px-2 py-0.5 leading-none text-black">Yellow</td>
+                    <td className="px-1 py-0.5 leading-none">0.5m left</td>
+                    <td className="px-1 py-0.5 leading-none">1m left</td>
                   </tr>
                   <tr className="border-b border-gray-50">
-                    <td className="bg-red-600 text-white px-2 py-1 leading-none">Red</td>
-                    <td className="px-1 py-1 leading-none">Up</td>
-                    <td className="px-1 py-1 leading-none">Up</td>
+                    <td className="bg-red-600 text-white px-2 py-0.5 leading-none">Red</td>
+                    <td className="px-1 py-0.5 leading-none">Up</td>
+                    <td className="px-1 py-0.5 leading-none">Up</td>
                   </tr>
                   <tr>
-                    <td className="bg-gray-50 px-2 py-1 text-gray-600 leading-none">Grace</td>
-                    <td className="px-1 py-1 leading-none">30s</td>
-                    <td className="px-1 py-1 leading-none">30s</td>
+                    <td className="bg-gray-50 px-2 py-0.5 text-gray-600 leading-none">Grace</td>
+                    <td className="px-1 py-0.5 leading-none">30s</td>
+                    <td className="px-1 py-0.5 leading-none">30s</td>
                   </tr>
                 </tbody>
               </table>
@@ -369,7 +369,7 @@ const App: React.FC = () => {
               <div className="bg-[#fce4ec] px-3 py-1 border-b border-red-100">
                 <h3 className="font-bold italic text-base text-[#772432] leading-none">Reminder</h3>
               </div>
-              <div className="p-2 py-1 space-y-1 text-[10.5px] font-bold text-gray-800 leading-snug">
+              <div className="p-2 py-1 space-y-0.5 text-[10px] font-bold text-gray-800 leading-tight">
                 {reminders.map((r, idx) => (
                   <div key={idx} className="flex gap-2 items-start">
                     <span className="shrink-0 text-[#772432] font-black">{idx + 1}.</span>
@@ -379,14 +379,14 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* 5. Club Officers */}
-            <div className="mt-auto pt-1 shrink-0 overflow-hidden">
-               <h3 className="text-[#004165] font-black italic text-[13px] uppercase mb-1 tracking-[0.1em] border-b-2 border-[#004165]/10 pb-0.5">Club Officers</h3>
+            {/* 5. Club Officers - MOVED UP */}
+            <div className="mt-1 pt-1 shrink-0 overflow-hidden">
+               <h3 className="text-[#004165] font-black italic text-[12px] uppercase mb-1 tracking-[0.1em] border-b-2 border-[#004165]/10 pb-0.5">Club Officers</h3>
                <div className="space-y-0.5">
                   {officers.map((off, idx) => (
-                    <div key={idx} className="flex justify-between items-center text-[10px] font-black border-b border-gray-50/50 pb-0.5 last:border-0">
+                    <div key={idx} className="flex justify-between items-center text-[9px] font-black border-b border-gray-50/50 pb-0.5 last:border-0">
                       <span className="text-gray-400 uppercase w-[50%] tracking-tighter whitespace-nowrap overflow-hidden text-ellipsis">{off.role}</span>
-                      <input className="bg-transparent outline-none text-[#772432] text-right w-[50%] font-black border-none p-0 h-4 leading-none" value={off.name} onChange={e => {
+                      <input className="bg-transparent outline-none text-[#772432] text-right w-[50%] font-black border-none p-0 h-3 leading-none" value={off.name} onChange={e => {
                         const next = [...officers]; next[idx].name = e.target.value; setOfficers(next);
                       }} />
                     </div>
@@ -396,8 +396,8 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* BOTTOM BRANDING - MOVED LOWER & REDUCED CONTENT */}
-        <div className="mt-auto pt-3 border-t-2 border-[#F2DF74] flex flex-col items-center w-full shrink-0">
+        {/* BOTTOM BRANDING - MOVED UP AND MADE MORE COMPACT */}
+        <div className="mt-4 pt-2.5 border-t-2 border-[#F2DF74] flex flex-col items-center w-full shrink-0">
           <p className="text-[#004165] font-black text-[11px] tracking-[0.35em] uppercase leading-none mb-1 opacity-90">CONNECT • LEARN • GROW</p>
           <p className="text-[#772432] font-black text-[14px] tracking-[0.15em] uppercase leading-none mt-0.5 mb-2">粤东地区首家头马国际演讲俱乐部</p>
         </div>
