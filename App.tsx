@@ -30,7 +30,7 @@ const TMLogo = () => (
 );
 
 const App: React.FC = () => {
-  const STORAGE_KEY = 'sttm-agenda-v22-pic-ready';
+  const STORAGE_KEY = 'sttm-agenda-v23-final-capture-fix';
   const introRef = useRef<HTMLTextAreaElement>(null);
   const paperRef = useRef<HTMLDivElement>(null);
 
@@ -43,7 +43,7 @@ const App: React.FC = () => {
       day: DayOfWeek.Monday,
       month: Month.January,
       date: '1',
-      time: '02:30',
+      time: '19:30',
       location: '汕头市龙湖区梅溪西路2号知书空间',
       locationEn: 'Zhishu Space, Meixi West Road No. 2',
       wordOfTheDay: 'Excellence',
@@ -93,7 +93,7 @@ const App: React.FC = () => {
   };
 
   const addMinutes = (timeStr: string, minutesToAdd: string): string => {
-    const parts = (timeStr || "02:30").split(':').map(Number);
+    const parts = (timeStr || "19:30").split(':').map(Number);
     if (parts.length < 2 || isNaN(parts[0]) || isNaN(parts[1])) return timeStr;
     const [hours, minutes] = parts;
     let mins = parseFloat(minutesToAdd.replace(/[^0-9.]/g, '')) || 0;
@@ -103,7 +103,7 @@ const App: React.FC = () => {
   };
 
   const computedAgenda = useMemo(() => {
-    let currentTime = info.time || "02:30";
+    let currentTime = info.time || "19:30";
     return agenda.map((item) => {
       const itemStartTime = currentTime;
       if (!item.isSectionHeader && item.duration) {
@@ -127,12 +127,22 @@ const App: React.FC = () => {
   const handleSaveImage = async () => {
     if (!paperRef.current) return;
     try {
+      // Ensure we are at the top to avoid coordinates offset issues with html2canvas
+      window.scrollTo(0, 0);
+      
       // @ts-ignore
       const canvas = await html2canvas(paperRef.current, {
         scale: 2,
         useCORS: true,
         logging: false,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        onclone: (documentClone: Document) => {
+          // You can perform last-minute cleanup here if needed
+          const inputs = documentClone.querySelectorAll('input, textarea');
+          inputs.forEach((el: any) => {
+             el.style.overflow = 'visible';
+          });
+        }
       });
       const link = document.createElement('a');
       link.download = `STTM-Agenda-M${info.meetingNumber}.png`;
@@ -223,21 +233,24 @@ const App: React.FC = () => {
 
         {/* Meeting Information Section */}
         <div className="space-y-4 md:space-y-6 mb-6">
-          <div className="flex flex-wrap md:flex-nowrap items-center gap-x-5 gap-y-2 border-b-2 border-[#772432] pb-2 md:pb-4">
-            <div className="flex items-center gap-1.5 shrink-0">
-              <span className="text-lg md:text-3xl font-black text-[#004165] italic whitespace-nowrap">Meeting #</span>
+          {/* Meeting # & Theme - Improved Alignment for Image Generation */}
+          <div className="flex flex-wrap md:flex-nowrap items-baseline gap-x-5 gap-y-2 border-b-2 border-[#772432] pb-2 md:pb-4 overflow-hidden">
+            <div className="flex items-baseline gap-1.5 shrink-0 h-full">
+              <span className="text-lg md:text-3xl font-black text-[#004165] italic whitespace-nowrap leading-none">Meeting #</span>
               <input
                 type="text"
-                className="text-xl md:text-4xl font-black text-[#772432] outline-none w-14 md:w-28 bg-transparent"
+                className="text-xl md:text-4xl font-black text-[#772432] outline-none w-14 md:w-28 bg-transparent leading-none"
+                style={{ verticalAlign: 'baseline' }}
                 value={info.meetingNumber}
                 onChange={(e) => setInfo({ ...info, meetingNumber: e.target.value })}
               />
             </div>
-            <div className="flex items-center gap-2 flex-grow min-w-[180px]">
-              <span className="text-lg md:text-3xl font-black text-[#004165] shrink-0">主题:</span>
+            <div className="flex items-baseline gap-2 flex-grow min-w-[180px] h-full">
+              <span className="text-lg md:text-3xl font-black text-[#004165] shrink-0 leading-none">主题:</span>
               <input
                 type="text"
-                className="text-lg md:text-3xl font-black text-[#772432] outline-none flex-grow bg-transparent overflow-ellipsis"
+                className="text-lg md:text-3xl font-black text-[#772432] outline-none flex-grow bg-transparent overflow-ellipsis leading-none"
+                style={{ verticalAlign: 'baseline' }}
                 value={info.theme}
                 onChange={(e) => setInfo({ ...info, theme: e.target.value })}
                 placeholder="会议主题..."
@@ -252,7 +265,7 @@ const App: React.FC = () => {
                 <span className="text-[9px] md:text-[11px] font-black text-[#772432] uppercase tracking-widest block mb-0.5 opacity-60">Introduction 导语:</span>
                 <textarea
                   ref={introRef}
-                  className="w-full bg-transparent outline-none text-xs md:text-lg font-bold text-gray-700 italic leading-snug resize-none border-none p-0 focus:ring-0 overflow-hidden"
+                  className="w-full bg-transparent outline-none text-xs md:text-lg font-bold text-gray-700 italic leading-snug resize-none border-none p-0 focus:ring-0 overflow-hidden pr-2"
                   value={info.introduction}
                   onChange={(e) => setInfo({ ...info, introduction: e.target.value })}
                   rows={1}
@@ -295,14 +308,16 @@ const App: React.FC = () => {
             </div>
             <div className="flex-grow flex flex-col gap-0.5">
               <textarea
-                className="text-xs md:text-lg font-bold text-gray-800 w-full bg-transparent outline-none resize-none leading-tight overflow-visible p-0 border-none focus:ring-0"
+                className="text-xs md:text-lg font-bold text-gray-800 w-full bg-transparent outline-none resize-none leading-tight overflow-visible p-0 border-none focus:ring-0 pr-2"
+                style={{ height: 'auto', minHeight: '1.2em' }}
                 value={info.location}
                 rows={1}
                 onInput={(e) => handleAutoHeight(e.target as HTMLTextAreaElement)}
                 onChange={(e) => setInfo({ ...info, location: e.target.value })}
               />
               <textarea
-                className="text-[9px] md:text-xs font-black text-gray-400 w-full bg-transparent outline-none uppercase resize-none leading-tight overflow-visible p-0 border-none focus:ring-0"
+                className="text-[9px] md:text-xs font-black text-gray-400 w-full bg-transparent outline-none uppercase resize-none leading-tight overflow-visible p-0 border-none focus:ring-0 pr-2"
+                style={{ height: 'auto', minHeight: '1.2em' }}
                 value={info.locationEn}
                 rows={1}
                 onInput={(e) => handleAutoHeight(e.target as HTMLTextAreaElement)}
@@ -388,7 +403,7 @@ const App: React.FC = () => {
                       <div className="flex-grow px-3">
                         <textarea
                           rows={1}
-                          className="w-full bg-transparent outline-none font-bold text-gray-800 text-[11px] md:text-base resize-none overflow-hidden block"
+                          className="w-full bg-transparent outline-none font-bold text-gray-800 text-[11px] md:text-base resize-none overflow-hidden block pr-2"
                           value={item.activity}
                           onInput={(e) => handleAutoHeight(e.target as HTMLTextAreaElement)}
                           onChange={(e) => updateAgendaItem(item.id, 'activity', e.target.value)}
@@ -397,7 +412,7 @@ const App: React.FC = () => {
                       <div className="w-20 md:w-56 px-3 text-right">
                         <textarea
                           rows={1}
-                          className="w-full bg-transparent outline-none text-[11px] md:text-base font-black text-[#772432] text-right italic resize-none overflow-hidden block pr-2 md:pr-4"
+                          className="w-full bg-transparent outline-none text-[11px] md:text-base font-black text-[#772432] text-right italic resize-none overflow-hidden block pr-4 md:pr-6"
                           value={item.role}
                           onInput={(e) => handleAutoHeight(e.target as HTMLTextAreaElement)}
                           onChange={(e) => updateAgendaItem(item.id, 'role', e.target.value)}
@@ -432,7 +447,7 @@ const App: React.FC = () => {
               {[0, 1, 2].map(idx => (
                 <div key={idx} className="flex items-center gap-3 md:gap-4">
                   <span className={`w-3 h-3 md:w-4 md:h-4 rounded-full border-2 border-white shrink-0 ${idx === 0 ? 'bg-green-500' : idx === 1 ? 'bg-[#f2df74]' : 'bg-red-500'}`}></span>
-                  <input className="bg-transparent border-none outline-none w-full p-0.5 rounded transition-colors" value={timeRules[idx]} onChange={(e) => {
+                  <input className="bg-transparent border-none outline-none w-full p-0.5 rounded transition-colors overflow-visible" value={timeRules[idx]} onChange={(e) => {
                     const next = [...timeRules]; next[idx] = e.target.value; setTimeRules(next);
                   }} />
                 </div>
@@ -446,7 +461,7 @@ const App: React.FC = () => {
               {reminders.map((reminder, idx) => (
                 <div key={idx} className="flex items-center gap-2">
                   <div className="w-1 md:w-1.5 h-1 md:h-1.5 bg-white/40 rounded-full shrink-0"></div>
-                  <input className="bg-transparent border-none outline-none w-full text-[10px] md:text-[13px] font-black italic opacity-95 p-0.5 rounded transition-colors" value={reminder} onChange={(e) => {
+                  <input className="bg-transparent border-none outline-none w-full text-[10px] md:text-[13px] font-black italic opacity-95 p-0.5 rounded transition-colors overflow-visible" value={reminder} onChange={(e) => {
                       const next = [...reminders]; next[idx] = e.target.value; setReminders(next);
                   }} />
                 </div>
@@ -456,13 +471,13 @@ const App: React.FC = () => {
         </div>
 
         {/* Officers Team Grid */}
-        <div className="bg-gray-50 p-6 md:p-10 rounded-[32px] border-2 border-gray-100 mt-auto shadow-inner">
+        <div className="bg-gray-50 p-6 md:p-10 rounded-[32px] border-2 border-gray-100 mt-auto shadow-inner overflow-hidden">
           <h3 className="text-[#004165] font-black italic text-sm md:text-xl uppercase mb-5 md:mb-8 text-center tracking-widest">Club Officers Team</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 md:gap-y-4">
             {officers.map((officer, index) => (
               <div key={index} className="flex justify-between items-center border-b border-gray-200 pb-1 md:pb-2.5 hover:bg-white transition-colors px-2 rounded-lg">
                 <span className="text-[11px] md:text-base font-black text-gray-400 uppercase tracking-tighter w-1/2">{officer.role}</span>
-                <input className="bg-transparent outline-none text-[12px] md:text-base font-black text-[#772432] text-right w-1/2" value={officer.name} onChange={(e) => {
+                <input className="bg-transparent outline-none text-[12px] md:text-base font-black text-[#772432] text-right w-1/2 overflow-visible" value={officer.name} onChange={(e) => {
                   const next = [...officers]; next[index].name = e.target.value; setOfficers(next);
                 }} />
               </div>
