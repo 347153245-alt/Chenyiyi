@@ -306,9 +306,9 @@ const App: React.FC = () => {
               </div>
               <div className="text-[9px] font-black text-gray-700 space-y-1.5">
                 <div className="flex gap-1 bg-white p-0.5 rounded-md border border-gray-100 shadow-sm">
-                  <select value={info.day} onChange={e => setInfo({...info, day: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[10px] font-black">{DAYS.map(d => <option key={d} value={d}>{d}</option>)}</select>
-                  <select value={info.month} onChange={e => setInfo({...info, month: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[10px] font-black">{MONTHS.map(m => <option key={m} value={m}>{m}</option>)}</select>
-                  <select value={info.date} onChange={e => setInfo({...info, date: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[10px] font-black">{DATES.map(d => <option key={d} value={d}>{d}</option>)}</select>
+                  <select value={info.day} onChange={e => setInfo({...info, day: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[12px] font-black">{DAYS.map(d => <option key={d} value={d}>{d}</option>)}</select>
+                  <select value={info.month} onChange={e => setInfo({...info, month: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[12px] font-black">{MONTHS.map(m => <option key={m} value={m}>{m}</option>)}</select>
+                  <select value={info.date} onChange={e => setInfo({...info, date: e.target.value})} className="bg-transparent border-none p-0 focus:ring-0 appearance-none flex-grow text-center text-[12px] font-black">{DATES.map(d => <option key={d} value={d}>{d}</option>)}</select>
                 </div>
                 <div className="flex items-center justify-center bg-[#772432] text-white py-1 rounded-md shadow-sm">
                   <input className="bg-transparent outline-none w-20 font-black text-center text-2xl leading-none" value={info.time} onChange={e => setInfo({...info, time: e.target.value})} />
@@ -326,12 +326,12 @@ const App: React.FC = () => {
                <input className="w-full bg-transparent outline-none text-xl font-black text-[#F2DF74] italic uppercase tracking-[0.05em] text-center leading-none" value={info.wordOfTheDay} onChange={e => setInfo({...info, wordOfTheDay: e.target.value})} />
             </div>
 
-            {/* 3. Time Rule - Optimized Table */}
+            {/* 3. Time Rule - Optimized Table with Larger Font */}
             <div className="border border-blue-100 rounded-xl overflow-hidden shadow-sm shrink-0 bg-white">
               <div className="bg-[#e1f5fe] px-3 py-1.5 border-b border-blue-100">
                 <h3 className="font-bold italic text-base text-[#004165] leading-none">Time Rule</h3>
               </div>
-              <table className="w-full text-left text-[9px] font-bold border-collapse">
+              <table className="w-full text-left text-[11px] font-bold border-collapse">
                 <thead>
                   <tr className="border-b border-gray-50 bg-gray-50/30">
                     <th className="px-2 py-1 text-[#004165]">Type</th>
