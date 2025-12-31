@@ -30,20 +30,20 @@ const TMLogo = () => (
 );
 
 const App: React.FC = () => {
-  const STORAGE_KEY = 'sttm-agenda-v21-final-layout';
+  const STORAGE_KEY = 'sttm-agenda-v22-pic-ready';
   const introRef = useRef<HTMLTextAreaElement>(null);
   const paperRef = useRef<HTMLDivElement>(null);
 
   const [info, setInfo] = useState<MeetingInfo>(() => {
     const saved = localStorage.getItem(STORAGE_KEY + '-info');
     return saved ? JSON.parse(saved) : {
-      meetingNumber: '42',
+      meetingNumber: '258',
       theme: 'Dream Big',
       introduction: 'Great things never came from comfort zones. Today we explore how to step out and reach our true potential.',
       day: DayOfWeek.Monday,
       month: Month.January,
       date: '1',
-      time: '19:30',
+      time: '02:30',
       location: '汕头市龙湖区梅溪西路2号知书空间',
       locationEn: 'Zhishu Space, Meixi West Road No. 2',
       wordOfTheDay: 'Excellence',
@@ -93,18 +93,17 @@ const App: React.FC = () => {
   };
 
   const addMinutes = (timeStr: string, minutesToAdd: string): string => {
-    const parts = (timeStr || "19:30").split(':').map(Number);
+    const parts = (timeStr || "02:30").split(':').map(Number);
     if (parts.length < 2 || isNaN(parts[0]) || isNaN(parts[1])) return timeStr;
     const [hours, minutes] = parts;
-    let mins = parseInt(minutesToAdd.replace(/[^0-9]/g, '')) || 0;
-    if (minutesToAdd.toLowerCase().includes('h')) mins *= 60;
+    let mins = parseFloat(minutesToAdd.replace(/[^0-9.]/g, '')) || 0;
     const date = new Date();
-    date.setHours(hours, minutes + mins, 0);
+    date.setHours(hours, minutes + Math.round(mins), 0);
     return date.toTimeString().slice(0, 5);
   };
 
   const computedAgenda = useMemo(() => {
-    let currentTime = info.time || "19:30";
+    let currentTime = info.time || "02:30";
     return agenda.map((item) => {
       const itemStartTime = currentTime;
       if (!item.isSectionHeader && item.duration) {
@@ -224,7 +223,6 @@ const App: React.FC = () => {
 
         {/* Meeting Information Section */}
         <div className="space-y-4 md:space-y-6 mb-6">
-          {/* Meeting # & Theme - Forced single line on desktop */}
           <div className="flex flex-wrap md:flex-nowrap items-center gap-x-5 gap-y-2 border-b-2 border-[#772432] pb-2 md:pb-4">
             <div className="flex items-center gap-1.5 shrink-0">
               <span className="text-lg md:text-3xl font-black text-[#004165] italic whitespace-nowrap">Meeting #</span>
