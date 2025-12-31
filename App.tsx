@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { Plus, Trash2, Printer, ChevronUp, ChevronDown, RotateCcw, Save, Quote, Image as ImageIcon, MapPin, Clock } from 'lucide-react';
+import { Plus, Trash2, Printer, ChevronUp, ChevronDown, RotateCcw, Save, Quote, Image as ImageIcon, MapPin, Clock, PlusCircle } from 'lucide-react';
 import { MeetingInfo, AgendaItem, Officer, DayOfWeek, Month } from './types';
 import { DEFAULT_AGENDA, DEFAULT_OFFICERS, DAYS, MONTHS, DATES } from './constants';
 
@@ -30,7 +30,7 @@ const TMLogo = () => (
 );
 
 const App: React.FC = () => {
-  const STORAGE_KEY = 'sttm-agenda-v19-final';
+  const STORAGE_KEY = 'sttm-agenda-v20-ux-plus';
   const introRef = useRef<HTMLTextAreaElement>(null);
   const paperRef = useRef<HTMLDivElement>(null);
 
@@ -224,7 +224,6 @@ const App: React.FC = () => {
 
         {/* Meeting Information Section */}
         <div className="space-y-4 md:space-y-6 mb-6">
-          {/* Meeting # & Theme Banner */}
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b-2 border-[#772432] pb-2 md:pb-4">
             <div className="flex items-center gap-1.5 shrink-0">
               <span className="text-lg md:text-3xl font-black text-[#004165] italic">Meeting #</span>
@@ -247,7 +246,6 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* 1. Introduction - Plain & Elegant */}
           <div className="border-l-4 md:border-l-[6px] border-[#772432] py-2 px-4 md:px-6">
             <div className="flex items-start gap-3">
               <Quote size={18} className="text-[#772432] mt-0.5 shrink-0 opacity-40" />
@@ -264,7 +262,6 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* 2. Time Row - Simplified */}
           <div className="bg-[#004165]/5 border border-[#004165]/10 p-3 md:p-4 rounded-xl flex items-center gap-4 md:gap-6 w-full shadow-sm">
             <div className="flex flex-col items-center shrink-0 border-r-2 border-[#004165]/20 pr-4 md:pr-6">
               <Clock size={16} className="text-[#004165] mb-0.5 opacity-60" />
@@ -292,7 +289,6 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* 3. Location Row - Simplified */}
           <div className="bg-gray-50 border border-gray-100 p-3 md:p-4 rounded-xl flex items-center gap-4 md:gap-6 w-full shadow-sm">
             <div className="flex flex-col items-center shrink-0 border-r-2 border-gray-200 pr-4 md:pr-6">
               <MapPin size={16} className="text-[#772432] mb-0.5 opacity-60" />
@@ -349,12 +345,26 @@ const App: React.FC = () => {
           <div className="space-y-0.5 relative">
             {computedAgenda.map((item, index) => (
               <React.Fragment key={item.id}>
+                {/* IN-BETWEEN ADD BUTTONS (Visible on Hover) */}
+                <div className="h-2 relative group/plus no-print">
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/plus:opacity-100 transition-all z-50">
+                    <div className="flex gap-2">
+                       <button onClick={() => addAgendaItemAt(index)} className="bg-[#004165] text-white p-1.5 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center gap-1 px-3 text-[10px] font-bold">
+                         <Plus size={12} /> ITEM
+                       </button>
+                       <button onClick={() => addAgendaItemAt(index, true)} className="bg-[#772432] text-white p-1.5 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center gap-1 px-3 text-[10px] font-bold">
+                         <Plus size={12} /> SECTION
+                       </button>
+                    </div>
+                  </div>
+                </div>
+
                 <div className={`group relative transition-all duration-200 ${item.isSectionHeader ? 'pt-4 pb-1.5' : ''}`}>
-                  {/* Inline Action Buttons */}
-                  <div className="absolute -left-1 md:-left-12 top-1/2 -translate-y-1/2 no-print flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white shadow-xl rounded-lg p-1 border border-gray-100 z-40">
-                    <button onClick={() => moveItem(index, 'up')} className="p-1.5 hover:bg-gray-100 rounded text-gray-400 hover:text-[#772432]"><ChevronUp size={14}/></button>
-                    <button onClick={() => moveItem(index, 'down')} className="p-1.5 hover:bg-gray-100 rounded text-gray-400 hover:text-[#772432]"><ChevronDown size={14}/></button>
-                    <button onClick={() => deleteAgendaItem(item.id)} className="p-1.5 hover:bg-red-50 rounded text-gray-400 hover:text-red-600"><Trash2 size={14}/></button>
+                  {/* Inline Action Buttons (Updated for easier access) */}
+                  <div className="absolute -left-1 md:-left-12 top-1/2 -translate-y-1/2 no-print flex flex-col gap-1 opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 transition-opacity bg-white/80 backdrop-blur shadow-xl rounded-lg p-1 border border-gray-100 z-40">
+                    <button onClick={() => moveItem(index, 'up')} className="p-2 hover:bg-gray-100 rounded text-gray-400 hover:text-[#772432] transition-colors"><ChevronUp size={16}/></button>
+                    <button onClick={() => moveItem(index, 'down')} className="p-2 hover:bg-gray-100 rounded text-gray-400 hover:text-[#772432] transition-colors"><ChevronDown size={16}/></button>
+                    <button onClick={() => deleteAgendaItem(item.id)} className="p-2 hover:bg-red-50 rounded text-gray-400 hover:text-red-600 transition-colors"><Trash2 size={16}/></button>
                   </div>
 
                   {item.isSectionHeader ? (
@@ -388,12 +398,14 @@ const App: React.FC = () => {
                         />
                       </div>
                       <div className="w-20 md:w-56 px-3 text-right">
+                        {/* Role Textarea - Optimized with padding-right for italics */}
                         <textarea
                           rows={1}
-                          className="w-full bg-transparent outline-none text-[11px] md:text-base font-black text-[#772432] text-right italic resize-none overflow-hidden block"
+                          className="w-full bg-transparent outline-none text-[11px] md:text-base font-black text-[#772432] text-right italic resize-none overflow-hidden block pr-2 md:pr-4"
                           value={item.role}
                           onInput={(e) => handleAutoHeight(e.target as HTMLTextAreaElement)}
                           onChange={(e) => updateAgendaItem(item.id, 'role', e.target.value)}
+                          placeholder="..."
                         />
                       </div>
                       <div className="w-8 md:w-14 text-right font-black text-gray-300 text-[10px] md:text-[13px] mt-0.5 shrink-0">
@@ -410,8 +422,8 @@ const App: React.FC = () => {
             ))}
           </div>
 
-          {/* Creation Controls */}
-          <div className="no-print mt-6 flex gap-3 md:gap-5">
+          {/* Bottom Creation Controls (Still kept for convenience) */}
+          <div className="no-print mt-8 flex gap-3 md:gap-5">
             <button onClick={() => addAgendaItemAt(agenda.length)} className="flex-grow py-3 border-2 border-dashed border-[#004165]/20 text-[#004165] rounded-xl font-bold hover:bg-[#004165] hover:text-white transition-all text-[10px] md:text-sm uppercase tracking-widest">+ 项目 Item</button>
             <button onClick={() => addAgendaItemAt(agenda.length, true)} className="flex-grow py-3 border-2 border-dashed border-[#772432]/20 text-[#772432] rounded-xl font-bold hover:bg-[#772432] hover:text-white transition-all text-[10px] md:text-sm uppercase tracking-widest">+ 环节 Section</button>
           </div>
@@ -419,7 +431,6 @@ const App: React.FC = () => {
 
         {/* Support Section Grid */}
         <div className="mt-10 md:mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8">
-          {/* Time Rules Box */}
           <div className="bg-[#004165] text-white p-4 md:p-6 rounded-2xl shadow-lg print-bg-blue">
             <h3 className="font-black italic text-[11px] md:text-base uppercase border-b border-white/20 pb-1.5 mb-3 tracking-widest">Time Rule 计时规则</h3>
             <div className="space-y-2.5 md:space-y-3 text-[10px] md:text-[13px] font-bold">
@@ -434,7 +445,6 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* Reminders Box */}
           <div className="bg-[#772432] text-white p-4 md:p-6 rounded-2xl shadow-lg print-bg-maroon">
             <h3 className="font-black italic text-[11px] md:text-base uppercase border-b border-white/20 pb-1.5 mb-3 tracking-widest">Kind Reminders 提示</h3>
             <div className="space-y-2 md:space-y-2.5">
@@ -464,7 +474,6 @@ const App: React.FC = () => {
             ))}
           </div>
           
-          {/* Footer Tagline and Branding */}
           <div className="mt-8 md:mt-14 text-center space-y-3 md:space-y-5">
             <p className="text-[#004165] font-black text-lg md:text-2xl tracking-[0.3em] uppercase leading-none opacity-90">CONNECT LEARN AND GROW</p>
             <p className="text-[#772432] font-black text-[12px] md:text-xl tracking-widest opacity-95 uppercase leading-none">粤东地区首家头马国际演讲俱乐部</p>
@@ -474,7 +483,7 @@ const App: React.FC = () => {
       
       {/* Page Footer Note */}
       <div className="mt-6 md:mt-8 text-gray-400 font-black uppercase text-[10px] md:text-sm tracking-[0.4em] no-print pb-24 md:pb-16 px-6 text-center">
-        ShanTou Toastmasters Club • Weekly Agenda
+        ShanTou Toastmasters Club • Weekly Agenda Maker
       </div>
     </div>
   );
