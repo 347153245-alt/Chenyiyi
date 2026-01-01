@@ -42,11 +42,11 @@ export const DEFAULT_AGENDA: AgendaItem[] = [
 ];
 
 export const DEFAULT_OFFICERS: Officer[] = [
-  { role: 'President', name: 'Christina' },
-  { role: 'VP Education', name: 'Ellie' },
-  { role: 'VP Membership', name: 'Namen' },
-  { role: 'VP Public Relations', name: 'Alexandra' },
-  { role: 'Secretary', name: 'Melody' },
-  { role: 'Treasurer', name: 'Harriet' },
-  { role: 'Sergeant at Arms', name: 'Jason' },
+  { role: 'President', name: 'Christina Chen' },
+  { role: 'VP Education', name: 'Ellie Ding' },
+  { role: 'VP Membership', name: 'Namen Zhou' },
+  { role: 'VP Public Relations', name: 'Alexandra Huang' },
+  { role: 'Secretary', name: 'Melody Mei' },
+  { role: 'Treasurer', name: 'Harriet Zeng' },
+  { role: 'Sergeant at Arms', name: 'Jason Chen' },
 ];

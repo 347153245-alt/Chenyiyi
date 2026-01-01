@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ShanTou Toastmasters Agenda Maker</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
       :root {
         --tm-maroon: #772432;
@@ -20,25 +19,33 @@
           display: none !important;
         }
         body {
-          margin: 0;
-          padding: 0;
+          margin: 0 !important;
+          padding: 0 !important;
           background-color: white !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        #root {
+          margin: 0 !important;
+          padding: 0 !important;
         }
         .print-container {
           box-shadow: none !important;
           margin: 0 !important;
-          padding: 8mm !important; /* 精确控制内边距 */
+          border-radius: 0 !important;
           width: 210mm !important;
           height: 297mm !important;
           max-width: 210mm !important;
           max-height: 297mm !important;
+          position: absolute;
+          top: 0;
+          left: 0;
+          page-break-after: avoid;
+          page-break-before: avoid;
           border-top: 14px solid var(--tm-maroon) !important;
           box-sizing: border-box !important;
-          overflow: hidden !important;
-        }
-        * {
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
+          transform: scale(1) !important; /* 打印时不缩放 */
+          transform-origin: top center !important;
         }
       }
       
@@ -53,6 +60,15 @@
       .no-scrollbar {
         -ms-overflow-style: none;
         scrollbar-width: none;
+      }
+
+      /* 允许页面在缩放时正确滚动 */
+      .zoom-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        overflow-x: auto;
       }
     </style>
     <script type="importmap">
