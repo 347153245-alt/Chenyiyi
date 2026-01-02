@@ -44,7 +44,8 @@
           page-break-before: avoid;
           border-top: 14px solid var(--tm-maroon) !important;
           box-sizing: border-box !important;
-          transform: scale(1) !important; /* 打印时不缩放 */
+          /* 核心修改：打印时整体缩放为 98% */
+          transform: scale(0.98) !important;
           transform-origin: top center !important;
         }
       }
@@ -62,7 +63,6 @@
         scrollbar-width: none;
       }
 
-      /* 允许页面在缩放时正确滚动 */
       .zoom-container {
         display: flex;
         flex-direction: column;
